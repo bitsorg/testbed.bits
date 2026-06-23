@@ -6,5 +6,5 @@ env:
   CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
 
 requires:
-  - common.bits
+  - lcg.bits
 ---

@@ -1,19 +1,24 @@
 package: zlib
-version: "%(tag_basename)s"
-tag: v1.3.1
-source: https://github.com/madler/zlib
+description: zlib lossless data compression library
+version: "1.3.2"
+tag: "1.3.2"
+sources:
+  - https://lcgpackages.web.cern.ch/tarFiles/sources/%(name)s-%(version)s.tar.gz
+prefer_system: ".*"
+prefer_system_check: |
+  printf "#include <zlib.h>\n" | cc -xc - -c -M 2>&1
+
 build_requires:
+  - bits-recipe-tools
   - "GCC-Toolchain:(?!osx)"
-  - alibuild-recipe-tools
+license: Zlib
 ---
-rsync -a --chmod=ug=rwX --delete --exclude '**/.git' --delete-excluded $SOURCEDIR/ ./
-
-./configure --prefix="$INSTALLROOT"
-
-make ${JOBS+-j $JOBS}
-make install
-# Modulefile
-MODULEDIR="$INSTALLROOT/etc/modulefiles"
-MODULEFILE="$MODULEDIR/$PKGNAME"
-mkdir -p "$MODULEDIR"
-alibuild-generate-module --lib > "$MODULEFILE"
+#!/bin/bash -e
+##############################
+. $(bits-include AutoToolsRecipe)
+##############################
+MODULE_OPTIONS="--bin --lib --pkgconfig"
+##############################
+function Configure() {
+  ./configure --prefix $INSTALLROOT
+}
