@@ -10,12 +10,14 @@ version: v1
 system:
   prefix:                     "/cvmfs/test.cvmfs.io"
   cvmfs_user_prefix:          "{prefix}/user"
-  cvmfs_releases_template:        "{prefix}/releases/{platform}/Packages/{pkg}/{tag}"
+  cvmfs_releases_template:    "{prefix}/releases/{platform}/Packages/{pkg}/{tag}"
   cvmfs_modules_template:     "{prefix}/{platform}/Modules/modulefiles/{pkg}"
   cvmfs_shared_path_template: "{prefix}/noarch/{pkg}/{tag}"
 
 env:
-  CXXFLAGS: "-fPIC -g -O2 -std=c++11"
+  # No CXXFLAGS here: testbed is only an umbrella for testing. The C++ standard
+  # is owned by the compiler-axis defaults (defaults-gccNN / defaults-clang),
+  # never the base profile, so it is never silently forced to an old value.
   CFLAGS: "-fPIC -g -O2"
   CMAKE_BUILD_TYPE: "RELWITHDEBINFO"
 
