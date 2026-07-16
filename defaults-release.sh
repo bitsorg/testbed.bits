@@ -8,7 +8,7 @@ version: v1
 # ({prefix} = the group/user CVMFS root, {platform}/{pkg}/{tag} per package),
 # so the path is never re-defined downstream.
 system:
-  prefix:                     "/cvmfs/test.cvmfs.io"
+  # CVMFS root prefix is authoritative in bits-console ui-config.yaml (auth boundary).
   cvmfs_user_prefix:          "{prefix}/user"
   cvmfs_releases_template:    "{prefix}/releases/{platform}/Packages/{pkg}/{tag}"
   cvmfs_modules_template:     "{prefix}/{platform}/Modules/modulefiles/{pkg}"
