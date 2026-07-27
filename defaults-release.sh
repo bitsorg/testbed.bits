@@ -12,7 +12,7 @@ system:
   # cvmfs_prefix) injects the authoritative value, which WINS; the value below MUST
   # match it (kept in sync by bits-admin PR) or an injected build refuses to publish.
   # It lets local `bits build` (no injection) work and is a checked declaration.
-  prefix:                     "/cvmfs/test.cvmfs.io"
+  prefix:                     "/cvmfs/bits.cern.ch"
   cvmfs_user_prefix:          "{prefix}/user"
   cvmfs_releases_template:    "{prefix}/releases/{platform}/Packages/{pkg}/{tag}"
   cvmfs_modules_template:     "{prefix}/{platform}/Modules/modulefiles/{pkg}"
