@@ -1,7 +1,7 @@
 package: defaults-testbed
 version: v1
 
-# Testbed overlay: redirect the PUBLISH DESTINATION, change nothing else.
+# Testbed overlay: redirect the PUBLISH ROOT, change nothing else.
 #
 # Select by appending it to the wrapped group's own chain, e.g.
 #     bits build --defaults alidist::o2::testbed  O2
@@ -52,8 +52,8 @@ system:
   # what makes the injected testbed prefix legal, instead of looking like a
   # recipe trying to redirect a build into another group's tree.
   prefix:                     "/cvmfs/test.cvmfs.io"
+  # No path templates here: the wrapped group's layout applies under this root.
+  # The user prefix must stay — some groups declare theirs absolute, which would
+  # send user builds into the production tree.
   cvmfs_user_prefix:          "{prefix}/user"
-  cvmfs_releases_template:    "{prefix}/releases/{platform}/Packages/{pkg}/{tag}"
-  cvmfs_modules_template:     "{prefix}/{platform}/Modules/modulefiles/{pkg}"
-  cvmfs_shared_path_template: "{prefix}/noarch/{pkg}/{tag}"
 ---
