@@ -1,14 +1,14 @@
 package: defaults-testbed
 version: v1
 
-# Testbed overlay: redirect the PUBLISH ROOT, change nothing else.
+# Testbed overlay: redirect the CVMFS REPOSITORY, change nothing else.
 #
 # Select by appending it to the wrapped group's own chain, e.g.
 #     bits build --defaults alidist::o2::testbed  O2
 # (bits prepends the release base, so that is really
 #  release::alidist::o2::testbed). It must come LAST: readDefaults deep-merges
 # the chain in order and the last profile wins per key, so a `testbed` placed
-# earlier would have its prefix overwritten by the group's.
+# earlier would have its setting overwritten by the group's.
 #
 # WHY THIS EXISTS
 #
@@ -38,22 +38,17 @@ version: v1
 valid_defaults_exempt: true
 
 system:
-  # The CVMFS root the testbed publishes into. This is an AUTHORIZATION
-  # boundary, and bits fails closed when a recipe-declared prefix disagrees
-  # with the one bits-console injects:
+  # Only the /cvmfs/<repository> part of the group's paths changes; the group's
+  # prefix, user prefix and templates stay as they are. LHCb's
+  #   /cvmfs/bits.cern.ch/lhcb/releases/LCG_110/...
+  # publishes to
+  #   /cvmfs/test.cvmfs.io/lhcb/releases/LCG_110/...
+  # so every group keeps its own tree in the testbed, as in production.
   #
-  #   CVMFS prefix mismatch: the defaults/recipe prefix %r disagrees with the
-  #   authoritative bits-console prefix %r ... a build will not publish while
-  #   they differ.
-  #
-  # So this MUST stay equal to cvmfs_prefix in
-  # bits-console/communities/Testbed/ui-config.yaml. That check is the whole
-  # reason a wrapped group can be redirected safely: the overlay's prefix is
-  # what makes the injected testbed prefix legal, instead of looking like a
-  # recipe trying to redirect a build into another group's tree.
-  prefix:                     "/cvmfs/test.cvmfs.io"
-  # No path templates here: the wrapped group's layout applies under this root.
-  # The user prefix must stay — some groups declare theirs absolute, which would
-  # send user builds into the production tree.
-  cvmfs_user_prefix:          "{prefix}/user"
+  # The prefix is an authorization boundary: bits fails closed unless the
+  # swapped prefix lies at or below the one bits-console injects (cvmfs_prefix
+  # in bits-console/communities/Testbed/ui-config.yaml, /cvmfs/test.cvmfs.io).
+  # In a production community the swapped prefix falls outside that community's
+  # prefix, so this overlay cannot redirect a production build.
+  cvmfs_repository: "test.cvmfs.io"
 ---
