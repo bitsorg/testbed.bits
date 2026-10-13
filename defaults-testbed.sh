@@ -51,4 +51,14 @@ system:
   # In a production community the swapped prefix falls outside that community's
   # prefix, so this overlay cannot redirect a production build.
   cvmfs_repository: "test.cvmfs.io"
+
+  # Which signed manifests the build trusts for store reuse: the orchestrator's
+  # own (CANARY/), and for an architecture it has not certified, the
+  # bits-manifests CI's (MANIFESTS/). Per architecture the first prefix that has
+  # a manifest wins. Like everything under system:, it is not hashed. Once the
+  # orchestrator writes MANIFESTS/ itself (M8b), this line goes.
+  # The orchestrator signs an architecture's manifest again only when it
+  # certifies a build of it: a BOM removed from bits-manifests stays trusted
+  # here until then (or until that manifest expires).
+  trust_manifest_prefix: "CANARY/common-manifest,MANIFESTS/common-manifest"
 ---
