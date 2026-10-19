@@ -60,5 +60,5 @@ system:
   # The orchestrator signs an architecture's manifest again only when it
   # certifies a build of it: a BOM removed from bits-manifests stays trusted
   # here until then (or until that manifest expires).
-  trust_manifest_prefix: "CANARY/common-manifest,MANIFESTS/common-manifest"
+  #trust_manifest_prefix: "CANARY/common-manifest,MANIFESTS/common-manifest"
 ---
