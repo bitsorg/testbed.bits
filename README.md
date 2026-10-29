@@ -18,8 +18,10 @@ which in turn requires [lcg.bits](https://github.com/bitsorg/lcg.bits).
 
 ## Getting started: trying the overlay locally
 
-You can add the overlay to a group's build on your own machine to check what it resolves to.
-Get bits as described in the [bits README](https://github.com/bitsorg/bits#installation),
+You can add the overlay to a group's build on your own machine to check what it resolves
+to. Get bits and prepare the machine as described in [Installation &
+Prerequisites](https://github.com/bitsorg/bits/blob/main/docs/USERGUIDE.md#2-installation--prerequisites)
+in the bits user guide (with `--docker`, as below, docker or rootless podman is enough),
 then put this repository on the recipe search path of the group's build and add `testbed`
 at the end of its defaults chain:
 
@@ -29,7 +31,7 @@ bits init lhcb.bits && cd lhcb.bits   # the group whose build you want to re-run
 
 bits build --dry-run --search-path "$PWD/../testbed.bits" \
            --defaults lhcb::gcc14::opt::testbed --set release=LCG_110 \
-           --architecture x86_64-el9 lcg-view
+           --docker --architecture x86_64-el9 lcg-view
 ```
 
 Because the hashes are unchanged, the plan lists the same packages as the build without
