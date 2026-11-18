@@ -8,8 +8,8 @@ gateway, cvmfs-prepub, Stratum 0/1 and object store, serving the repository
 `test.cvmfs.io`) instead of the production repository `bits.cern.ch`. Publishing changes can
 therefore be tried end to end without touching production and without recompiling a stack.
 
-The repository holds no package recipes, only one defaults file, `defaults-testbed.sh`. It is
-an overlay that changes a single setting, `system.cvmfs_repository: test.cvmfs.io`, so a
+The `packages/` directory is empty: this repository only supplies the defaults file
+`defaults-testbed.sh`. It is an overlay that changes a single setting, `system.cvmfs_repository: test.cvmfs.io`, so a
 group's tree moves from `/cvmfs/bits.cern.ch/<group>/...` to `/cvmfs/test.cvmfs.io/<group>/...`
 and everything below the repository name stays as in production. In the
 [bits-providers](https://github.com/bitsorg/bits-providers) registry, `testbed.bits` is listed
